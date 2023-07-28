@@ -610,7 +610,7 @@ private:
   bool mPosTrackingReady = false;
   sl::POSITIONAL_TRACKING_STATE mPosTrackingStatusWorld;
   sl::POSITIONAL_TRACKING_STATE mPosTrackingStatusCamera;
-  sl::POSITIONAL_TRACKING_STATE mGeoPoseStatus;
+  sl::GNSS_CALIBRATION_STATE mGeoPoseStatus;
   bool mResetOdom = false;
   bool mSpatialMappingRunning = false;
   bool mObjDetRunning = false;

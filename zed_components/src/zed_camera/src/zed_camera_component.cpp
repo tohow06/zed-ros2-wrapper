@@ -4076,7 +4076,7 @@ bool ZedCamera::startPosTracking()
 
     sl::PositionalTrackingFusionParameters params;
     params.enable_GNSS_fusion = mGnssFusionEnabled;
-    params.gnss_initialisation_distance = mGnssInitDistance;
+    //params.gnss_initialisation_distance = mGnssInitDistance;
     sl::FUSION_ERROR_CODE fus_err = mFusion.enablePositionalTracking(params);
 
     if (fus_err != sl::FUSION_ERROR_CODE::SUCCESS) {
@@ -6456,7 +6456,7 @@ void ZedCamera::publishGnssPoseStatus()
     poseStatusMsgPtr msg = std::make_unique<zed_interfaces::msg::PosTrackStatus>();
 
     if (mPosTrackingStatusWorld == sl::POSITIONAL_TRACKING_STATE::OK &&
-      mGeoPoseStatus == sl::POSITIONAL_TRACKING_STATE::OK)
+      mGeoPoseStatus == sl::GNSS_CALIBRATION_STATE::CALIBRATED)
     {
       msg->status = static_cast<uint8_t>(sl::POSITIONAL_TRACKING_STATE::OK);
     } else {
@@ -6483,7 +6483,7 @@ void ZedCamera::publishGeoPoseStatus()
     poseStatusMsgPtr msg = std::make_unique<zed_interfaces::msg::PosTrackStatus>();
 
     if (mPosTrackingStatusWorld == sl::POSITIONAL_TRACKING_STATE::OK &&
-      mGeoPoseStatus == sl::POSITIONAL_TRACKING_STATE::OK)
+      mGeoPoseStatus == sl::GNSS_CALIBRATION_STATE::CALIBRATED)
     {
       msg->status = static_cast<uint8_t>(sl::POSITIONAL_TRACKING_STATE::OK);
     } else {
@@ -6582,7 +6582,7 @@ void ZedCamera::processGeoPose()
 
   publishGeoPoseStatus();
 
-  if (mGeoPoseStatus != sl::POSITIONAL_TRACKING_STATE::OK ||
+  if (mGeoPoseStatus != sl::GNSS_CALIBRATION_STATE::CALIBRATED ||
     mPosTrackingStatusWorld != sl::POSITIONAL_TRACKING_STATE::OK)
   {
     rclcpp::Clock steady_clock(RCL_STEADY_TIME);
@@ -9050,7 +9050,7 @@ void ZedCamera::callback_toLL(
     return;
   }
 
-  if (mGeoPoseStatus != sl::POSITIONAL_TRACKING_STATE::OK) {
+  if (mGeoPoseStatus != sl::GNSS_CALIBRATION_STATE::CALIBRATED) {
     RCLCPP_WARN(get_logger(), " * GNSS fusion is not ready");
     return;
   }
@@ -9089,7 +9089,7 @@ void ZedCamera::callback_fromLL(
     return;
   }
 
-  if (mGeoPoseStatus != sl::POSITIONAL_TRACKING_STATE::OK) {
+  if (mGeoPoseStatus != sl::GNSS_CALIBRATION_STATE::CALIBRATED) {
     RCLCPP_WARN(get_logger(), " * GNSS fusion is not ready");
     return;
   }
