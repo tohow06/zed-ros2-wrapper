@@ -12,8 +12,8 @@
             sim_port: 30000 # The connection port of the simulation server. See the documentation of the supported simulation plugins for more information.
 
         svo:
-            svo_loop: true # Enable loop mode when using an SVO as input source
-            svo_realtime: true # if true the SVO will be played trying to respect the original framerate eventually skipping frames, otherwise every frame will be processed respecting the `pub_frame_rate` setting
+            svo_loop: false # Enable loop mode when using an SVO as input source
+            svo_realtime: false # if true the SVO will be played trying to respect the original framerate eventually skipping frames, otherwise every frame will be processed respecting the `pub_frame_rate` setting
 
         general:
             camera_timeout_sec: 5
